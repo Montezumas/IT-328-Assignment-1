@@ -1,15 +1,15 @@
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.BooleanSupplier;
 
-public class Graph {
+public class Graph implements Comparable<Graph>{
 
 
     private boolean edgeList[][];
+    private int nodeCount;
 
-    public Graph(List<String> lines){
+    public Graph(List<String> lines, int nodeCount){
+
+
+        this.nodeCount = nodeCount;
         edgeList = new boolean[lines.size()][lines.get(0).length()];
 
         for(int row = 0; row < lines.size(); row++){
@@ -19,6 +19,33 @@ public class Graph {
         }
     }
 
+    public Graph getMaxClique(){
+
+        boolean firstCall = true;
+        Graph largestCompleteGraph = null;
+
+        largestCompleteGraph = getMaxClique(0);
+
+        for(int i = 1; i < nodeCount; i++){
+            Graph newMax = getMaxClique(i);
+            if(largestCompleteGraph.compareTo(newMax) == 1){
+                largestCompleteGraph = newMax;
+            }
+        }
+
+        return largestCompleteGraph;
+    }
+
+    private Graph getMaxClique(int nodeNumber){
+
+        return null;
+    }
+
+
+    @Override
+    public int compareTo(Graph o) {
+        return 0;
+    }
 
     @Override
     public String toString() {

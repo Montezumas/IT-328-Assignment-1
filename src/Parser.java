@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Parser {
 
-	public List<Graph> parseGraph(String filename) {
+	public static List<Graph> parseGraph(String filename) {
         List<Graph> allGraphs = new ArrayList<>();
 
 		BufferedReader bufferedReader;
@@ -32,13 +32,13 @@ public class Parser {
                     lines.add(line);
 				}
 
-                allGraphs.add(new Graph(lines));
+                allGraphs.add(new Graph(lines,rowCount));
 			}
 
 			reader.close();
 			bufferedReader.close();
 
-            System.out.println(allGraphs.get(0).toString());
+            //System.out.println(allGraphs.get(2).toString());
 
             return allGraphs;
 
