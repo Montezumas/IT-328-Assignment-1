@@ -38,6 +38,8 @@ public class Parser {
 			reader.close();
 			bufferedReader.close();
 
+            System.out.println(allGraphs.get(0).toString());
+
             return allGraphs;
 
 		} catch (FileNotFoundException e) {

@@ -23,7 +23,15 @@ public class Graph {
     @Override
     public String toString() {
 
+        String returnString = "";
 
-        return null;
+        for(int i = 0; i < edgeList.length; i++){
+            for(int j = 0; j < edgeList[i].length;j++){
+                returnString += edgeList[i][j] ? "1" : "0";
+            }
+            returnString += "\n";
+        }
+
+        return returnString;
     }
 }
