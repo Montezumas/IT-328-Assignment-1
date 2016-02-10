@@ -3,61 +3,51 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Parser {
 
-	public Graph[] parseGraph(String filename) {
-		Graph[] arr = new Graph[60];
+	public List<Graph> parseGraph(String filename) {
+        List<Graph> allGraphs = new ArrayList<>();
 
 		BufferedReader bufferedReader;
 		try {
 			FileReader reader = new FileReader(new File(filename));
 			bufferedReader = new BufferedReader(reader);
 
-			String strStartNumber = null;
-			int intStartNum = 0;
-
-			Graph graph = new Graph();
+			String strStartNumber;
 
 			while ((strStartNumber = bufferedReader.readLine()) != null) {
-				intStartNum = Integer.parseInt(strStartNumber);
+
+				int rowCount = Integer.parseInt(strStartNumber);
 				
-				if(intStartNum == 0)
+				if(rowCount == 0)
 					break;
-				
-				for(int i = 0; i < intStartNum; i++) {
-					graph.matrix.put(i+"", new HashMap<String, Boolean>());
-					
-					String adjLine = bufferedReader.readLine();
-					System.out.println(adjLine);
-					
-					System.out.println(graph.matrix.containsKey(i+""));
-					
-					for(int j = 0; j < adjLine.length(); i++) {
-						if(adjLine.charAt(j) == '1') {
-							graph.matrix.get(i+"").put(j/2+"", new Boolean(true));
-						} else {
-							graph.matrix.get(i+"").put(j/2+"", new Boolean(false));
-							//System.out.println(temp);
-						}
-					}
-					
+
+                List<String> lines = new ArrayList<>();
+				for(int i = 0; i < rowCount; i++) {
+					String line = bufferedReader.readLine().replaceAll("\\s+","");
+                    lines.add(line);
 				}
-				
-				System.out.println("while");
+
+                allGraphs.add(new Graph(lines));
 			}
 
 			reader.close();
 			bufferedReader.close();
+
+            return allGraphs;
+
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found: " + e.getMessage());
-			return null;
+
 		} catch (IOException e) {
 			System.out.println("IO Error: " + e.getMessage());
 		}
 
-		return arr;
+        return null;
 	}
 
 }
