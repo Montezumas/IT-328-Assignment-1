@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Parser {
@@ -50,6 +49,55 @@ public class Parser {
 		}
 
         return null;
+	}
+	
+	public static List<CNF> parseCNF(String filename) {
+        List<CNF> allFormulas = new ArrayList<>();
+
+		BufferedReader bufferedReader;
+		try {
+			FileReader reader = new FileReader(new File(filename));
+			bufferedReader = new BufferedReader(reader);
+
+			String lineString;
+
+			while ((lineString = bufferedReader.readLine()) != null) {
+				String literals = "";
+				
+				for(int i = 0; i < lineString.length(); i++) {
+					if(lineString.charAt(i) == ' ') {
+						lineString = lineString.substring(i);
+						break;
+					}
+					
+					literals += lineString.charAt(i);
+				}
+				
+				lineString = lineString.replaceAll("\\s+", "");
+				//System.out.println(lineString);
+				
+				if(lineString.equals("0"))
+					break;
+				
+				CNF tempCNF = new CNF(lineString, Integer.parseInt(literals));
+
+				allFormulas.add(tempCNF);
+			}
+
+			reader.close();
+			bufferedReader.close();
+
+            return allFormulas;
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found: " + e.getMessage());
+
+		} catch (IOException e) {
+			System.out.println("IO Error: " + e.getMessage());
+		}
+		
+		
+		System.out.println("Error parsing CNF");
+		return null;
 	}
 
 }
