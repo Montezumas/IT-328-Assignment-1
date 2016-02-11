@@ -1,70 +1,97 @@
 import java.util.ArrayList;
 
+/**
+ * Class representing a 3CNF
+ * 
+ * @author Robby
+ *
+ */
 public class CNF {
-	
+
+	// 3CNF formula
 	private ArrayList<Integer[]> formula;
-	
-	private int literals;
+
+	// number of variables in the formula
+	private int numVars;
+
+	// number of clauses in formula
 	private int clauseCount;
-	
-	public CNF(String line, int literals) {
+
+	/**
+	 * This constructor will take in a line representing a CNF and parse it into
+	 * the necessary data structure
+	 * 
+	 * @param line
+	 * @param nv
+	 */
+	public CNF(String line) {
 		// initialize the data
 		this.formula = new ArrayList<Integer[]>();
-		this.literals = literals;
 		this.clauseCount = 0;
+		String numVarsString = "";
+		for (int i = 0; i < line.length(); i++) {
+			// getting entire number representing numVars
+			if (line.charAt(i) == ' ') {
+				line = line.substring(i + 1);
+				break;
+			}
 
-		boolean isNot = false;
-		Integer[] tempClause = new Integer[literals];
-		int tempClauseSize = 0;
-		
-		for(int i = 0; i < line.length(); i++) {
-			if(isNot) {
-				tempClause[tempClauseSize] = Integer.parseInt("-"+line.charAt(i));
-				tempClauseSize++;
-				isNot = false;
-			} else if(line.charAt(i) == '-') {
-				isNot = true;
-			} else {
-				tempClause[tempClauseSize] = Integer.parseInt(""+line.charAt(i));
-				tempClauseSize++;
-			}
-			
-			if(tempClauseSize == literals) {
-				formula.add(tempClause);
-				tempClause = new Integer[literals];
-				tempClauseSize = 0;
-				clauseCount++;
-			}
-			
+			numVarsString += line.charAt(i);
 		}
-		
-		System.out.println(literals + " literals each, " + clauseCount + " clauses total\n" + this.toString());
+		numVars = Integer.parseInt(numVarsString);
+
+		// temporary data used to add items to the ArrayList
+		Integer[] tempClause = new Integer[3];
+		int tempClauseSize = 0;
+
+		// a single literal that will be built
+		String literal = "";
+
+		// getting 3CNF formula
+		for (int i = 0; i < line.length(); i++) {
+			if (line.charAt(i) == ' ' && line.charAt(i - 1) != ' ') {
+				// literal ready to be added
+				tempClause[tempClauseSize] = Integer.parseInt(literal);
+				tempClauseSize++;
+				literal = "";
+
+				if (tempClauseSize == 3) {
+					formula.add(tempClause);
+					tempClause = new Integer[3];
+					tempClauseSize = 0;
+					clauseCount++;
+				}
+			} else {
+				// need to construct whole literal
+				literal += line.charAt(i);
+			}
+		}
 	}
 
 	@Override
 	public String toString() {
-		String str = "[ ";
-		
-		for(int i = 0; i < formula.size(); i++) {
+		String str = "{ ";
+
+		for (int i = 0; i < formula.size(); i++) {
 			Integer[] temp = formula.get(i);
-			str += "{";
-			
-			for(int j = 0; j < temp.length; j++) {
+			str += "[";
+
+			for (int j = 0; j < temp.length; j++) {
 				str += temp[j];
-				if(j != temp.length - 1) {
+				if (j != temp.length - 1) {
 					str += ",";
 				}
 			}
-						
-			str += "}";
-			if(i != formula.size() - 1) {
-				str += ",";
+
+			str += "]";
+			if (i != formula.size() - 1) {
+				str += ", ";
 			}
-			
+
 		}
-		
-		str += "]";
-		
+
+		str += " }";
+
 		return str;
 	}
 

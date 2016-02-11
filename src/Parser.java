@@ -37,8 +37,6 @@ public class Parser {
 			reader.close();
 			bufferedReader.close();
 
-            //System.out.println(allGraphs.get(2).toString());
-
             return allGraphs;
 
 		} catch (FileNotFoundException e) {
@@ -59,27 +57,13 @@ public class Parser {
 			FileReader reader = new FileReader(new File(filename));
 			bufferedReader = new BufferedReader(reader);
 
-			String lineString;
+			String CNFLine;
 
-			while ((lineString = bufferedReader.readLine()) != null) {
-				String literals = "";
-				
-				for(int i = 0; i < lineString.length(); i++) {
-					if(lineString.charAt(i) == ' ') {
-						lineString = lineString.substring(i);
-						break;
-					}
-					
-					literals += lineString.charAt(i);
-				}
-				
-				lineString = lineString.replaceAll("\\s+", "");
-				//System.out.println(lineString);
-				
-				if(lineString.equals("0"))
+			while ((CNFLine = bufferedReader.readLine()) != null) {				
+				if(CNFLine.equals("0"))
 					break;
 				
-				CNF tempCNF = new CNF(lineString, Integer.parseInt(literals));
+				CNF tempCNF = new CNF(CNFLine);
 
 				allFormulas.add(tempCNF);
 			}
