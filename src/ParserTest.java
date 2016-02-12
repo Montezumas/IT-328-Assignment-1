@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Set;
 
 public class ParserTest {
 
@@ -7,10 +8,21 @@ public class ParserTest {
 
 		System.out.println("Graph Count: "+graphs.size());
 
-		graphs.get(3).getMaxClique();
+		Set<Integer> max = graphs.get(3).getMaxClique();
+		printSet(max);
 
 
 
+
+	}
+
+	private static void printSet(Set<Integer> set){
+		System.out.print("{ ");
+		for(Integer i : set){
+			System.out.print(i+", ");
+		}
+
+		System.out.print(" }" + " SIZE -> "+set.size() + " Clique Graph");
 
 	}
 	
