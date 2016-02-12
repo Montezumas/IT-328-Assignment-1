@@ -19,27 +19,34 @@ public class Graph implements Comparable<Graph>{
         }
     }
 
-    public Graph getMaxClique(){
+    public List<String> getMaxClique(){
 
-        boolean firstCall = true;
-        Graph largestCompleteGraph = null;
-
-        largestCompleteGraph = getMaxClique(0);
+        List<Integer> largestCompleteGraph = getMaxClique(0);
 
         for(int i = 1; i < nodeCount; i++){
-            Graph newMax = getMaxClique(i);
-            if(largestCompleteGraph.compareTo(newMax) == 1){
+            List<Integer> newMax = getMaxClique(i);
+            /*if(largestCompleteGraph.compareTo(newMax) == 1){
                 largestCompleteGraph = newMax;
-            }
+            }*/
         }
-
-        return largestCompleteGraph;
-    }
-
-    private Graph getMaxClique(int nodeNumber){
 
         return null;
     }
+
+    private List<Integer> getMaxClique(int nodeNumber){
+
+
+
+
+
+        return null;
+    }
+
+    private List<Integer> getMaxClique(int nodeNumber, List<Integer> currentGraph){
+        return null;
+    }
+
+
 
 
     @Override
