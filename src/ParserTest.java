@@ -8,7 +8,7 @@ public class ParserTest {
 
 		System.out.println("Graph Count: "+graphs.size());
 
-		Set<Integer> max = graphs.get(3).getMaxClique();
+		Set<Integer> max = graphs.get(59).getMaxClique();
 		printSet(max);
 
 
