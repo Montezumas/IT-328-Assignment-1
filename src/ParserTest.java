@@ -18,7 +18,7 @@ public class ParserTest {
 	private static void testCNF() {
 		List<CNF> test = Parser.parseCNF("cnfs16.txt");
 		
-		System.out.println(test.get(0).reduceToGraph().toString());
+		printSet(test.get(1).reduceToGraph().getMaxClique());
 	}
 
 	private static void printSet(Set<Integer> set){

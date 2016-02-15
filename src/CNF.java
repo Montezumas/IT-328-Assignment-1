@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Class representing a 3CNF
@@ -70,7 +69,20 @@ public class CNF {
 		}
 	}
 	
+	/**
+	 * Reduce this 3CNF to a graph
+	 * This allows for a max clique to be searched in the graph
+	 * which shows 3CNF >p k-clique
+	 * 
+	 * @return graph representation of 3CNF
+	 */
 	public Graph reduceToGraph() {
+		/*
+		 * This matrix will have size formula.size() * 3 so that every literal in
+		 * each clause in formula has its own unique index. Some indexes will represent the 
+		 * same literal.
+		 * 
+		 */
 		List<String> matrix = new ArrayList<String>();
 		int this3 = 0;
 		
@@ -87,18 +99,18 @@ public class CNF {
 						// same node
 						line += "1";
 					} else if(k == (this3) || k == (this3 + 1) || k == (this3 + 2)) {
-						// other nodes in this clause
+						// other nodes in this 3clause
 						line += "0";
 					} else {
 						// some other node
 						int l = k / 3;
 						int m = k % 3;
-						
-						//System.out.println(l+" "+m);
-						
+												
 						if(formula.get(l)[m] != (temp[j] * -1)) {
+							// this is not the negation of temp[j]
 							line += "1";
 						} else {
+							// this is negation of temp[j]
 							line += "0";
 						}
 					}
@@ -107,8 +119,11 @@ public class CNF {
 			}
 		}
 		
+		if(matrix.size() != (formula.size() * 3) || matrix.get(0).length() != matrix.size()) {
+			System.out.println("Matrix size error");
+		}
 		
-		Graph graph = new Graph(matrix, 0, '1');
+		Graph graph = new Graph(matrix, matrix.size(), '1');
 		
 		return graph;
 	}
