@@ -9,15 +9,14 @@ public class Graph implements Comparable<Graph>{
     private boolean edgeList[][];
     private int nodeCount;
 
-    public Graph(List<String> lines, int nodeCount){
-
+    public Graph(List<String> lines, int nodeCount, char flag){
 
         this.nodeCount = nodeCount;
         edgeList = new boolean[lines.size()][lines.get(0).length()];
 
         for(int row = 0; row < lines.size(); row++){
             for(int col = 0; col < lines.get(row).length(); col++){
-                edgeList[row][col] = lines.get(row).charAt(col) == '1';
+                edgeList[row][col] = lines.get(row).charAt(col) == flag;
             }
         }
     }
@@ -40,7 +39,7 @@ public class Graph implements Comparable<Graph>{
         }
 
         List<HashSet<Integer>> cliques = new ArrayList<>();
-        getMaxClique(cliques,new HashSet<>(),q,new HashSet<>());
+        getMaxClique(cliques,new HashSet<Integer>(),q,new HashSet<Integer>());
 
 
         Set<Integer> clique = new HashSet<>();

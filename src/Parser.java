@@ -31,7 +31,48 @@ public class Parser {
                     lines.add(line);
 				}
 
-                allGraphs.add(new Graph(lines,rowCount));
+                allGraphs.add(new Graph(lines,rowCount,'1'));
+			}
+
+			reader.close();
+			bufferedReader.close();
+
+            return allGraphs;
+
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found: " + e.getMessage());
+
+		} catch (IOException e) {
+			System.out.println("IO Error: " + e.getMessage());
+		}
+
+        return null;
+	}
+	
+	public static List<Graph> parseGraphIS(String filename) {
+        List<Graph> allGraphs = new ArrayList<>();
+
+		BufferedReader bufferedReader;
+		try {
+			FileReader reader = new FileReader(new File(filename));
+			bufferedReader = new BufferedReader(reader);
+
+			String strStartNumber;
+
+			while ((strStartNumber = bufferedReader.readLine()) != null) {
+
+				int rowCount = Integer.parseInt(strStartNumber);
+				
+				if(rowCount == 0)
+					break;
+
+                List<String> lines = new ArrayList<>();
+				for(int i = 0; i < rowCount; i++) {
+					String line = bufferedReader.readLine().replaceAll("\\s+","");
+                    lines.add(line);
+				}
+
+                allGraphs.add(new Graph(lines,rowCount,'0'));
 			}
 
 			reader.close();

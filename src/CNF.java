@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Class representing a 3CNF
@@ -66,6 +68,49 @@ public class CNF {
 				literal += line.charAt(i);
 			}
 		}
+	}
+	
+	public Graph reduceToGraph() {
+		List<String> matrix = new ArrayList<String>();
+		int this3 = 0;
+		
+		String emptyLine = "";
+		
+		for(int i = 0; i < formula.size(); i++) {
+			Integer[] temp = formula.get(i);
+			this3 = i*3;
+
+			for(int j = 0; j < temp.length; j++) {
+				String line = emptyLine;
+				for(int k = 0; k < formula.size() * 3; k++) {
+					if(k == (i*3) + j) {
+						// same node
+						line += "1";
+					} else if(k == (this3) || k == (this3 + 1) || k == (this3 + 2)) {
+						// other nodes in this clause
+						line += "0";
+					} else {
+						// some other node
+						int l = k / 3;
+						int m = k % 3;
+						
+						//System.out.println(l+" "+m);
+						
+						if(formula.get(l)[m] != (temp[j] * -1)) {
+							line += "1";
+						} else {
+							line += "0";
+						}
+					}
+				}
+				matrix.add(line);
+			}
+		}
+		
+		
+		Graph graph = new Graph(matrix, 0, '1');
+		
+		return graph;
 	}
 
 	@Override
