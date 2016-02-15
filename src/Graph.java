@@ -3,7 +3,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Graph implements Comparable<Graph>{
+public class Graph {
 
 
     private boolean edgeList[][];
@@ -22,16 +22,21 @@ public class Graph implements Comparable<Graph>{
         }
     }
 
+
+    //Copy contructor
+    public Graph(Graph g){
+        this.edgeList = new boolean[g.edgeList.length][g.edgeList[0].length];
+
+        for(int i = 0; i < edgeList.length; i++){
+            for(int j = 0; j < edgeList[i].length; j++){
+                this.edgeList[i][j] = g.edgeList[i][j];
+            }
+        }
+
+        this.nodeCount = g.nodeCount;
+    }
+
     public Set<Integer> getMaxClique(){
-
-        /*List<Integer> largestCompleteGraph = getMaxClique(0);
-
-        for(int i = 1; i < nodeCount; i++){
-            List<Integer> newMax = getMaxClique(i);
-            /*if(largestCompleteGraph.compareTo(newMax) == 1){
-                largestCompleteGraph = newMax;
-
-        }*/
 
         HashSet<Integer> q = new HashSet<>();
 
@@ -59,6 +64,28 @@ public class Graph implements Comparable<Graph>{
         return clique;
     }
 
+    public Set<Integer> getIndependentSet(){
+        Graph inversed = inverse();
+
+        return inversed.getMaxClique();
+
+    }
+
+    private Graph inverse(){
+        Graph g = new Graph(this);
+
+
+        for(int i = 0; i < g.edgeList.length; i++ ){
+            for(int j = 0; j < g.edgeList[i].length;j++){
+                if(i != j){
+                    g.edgeList[i][j] = !g.edgeList[i][j];
+                }
+            }
+        }
+
+        return g;
+    }
+
     private void getMaxClique(List<HashSet<Integer>> cliqueCatcher,HashSet<Integer> r, HashSet<Integer> p, HashSet<Integer> x){
 
         if(p.size() == 0 && x.size() == 0){
@@ -82,8 +109,6 @@ public class Graph implements Comparable<Graph>{
 
             r.add(i);
 
-            //HashSet<Integer> newR = new HashSet<>(r);
-            //newR.add(i);
             HashSet<Integer> neighborSet = getNeighborSet(i);
 
             getMaxClique(cliqueCatcher,r,intersect(newP,neighborSet),intersect(x,neighborSet));
@@ -124,10 +149,6 @@ public class Graph implements Comparable<Graph>{
     }
 
 
-    @Override
-    public int compareTo(Graph o) {
-        return 0;
-    }
 
     @Override
     public String toString() {

@@ -8,7 +8,7 @@ public class ParserTest {
 
 		System.out.println("Graph Count: "+graphs.size());
 
-		Set<Integer> max = graphs.get(59).getMaxClique();
+		Set<Integer> max = graphs.get(0).getMaxClique();
 		printSet(max);
 
 
@@ -18,8 +18,14 @@ public class ParserTest {
 
 	private static void printSet(Set<Integer> set){
 		System.out.print("{ ");
+		boolean first = true;
 		for(Integer i : set){
-			System.out.print(i+", ");
+			if(first){
+				first = false;
+			} else {
+				System.out.print(", ");
+			}
+			System.out.print(i);
 		}
 
 		System.out.print(" }" + " SIZE -> "+set.size() + " Clique Graph");
