@@ -23,7 +23,6 @@ public class CNF {
 	 * the necessary data structure
 	 * 
 	 * @param line
-	 * @param nv
 	 */
 	public CNF(String line) {
 		// initialize the data
@@ -72,7 +71,7 @@ public class CNF {
 	/**
 	 * Reduce this 3CNF to a graph
 	 * This allows for a max clique to be searched in the graph
-	 * which shows 3CNF >p k-clique
+	 * which shows 3CNF <p k-clique
 	 * 
 	 * @return graph representation of 3CNF
 	 */
