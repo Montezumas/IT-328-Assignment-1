@@ -10,13 +10,11 @@ import java.util.List;
 public class CNF {
 
 	// 3CNF formula
+	// Length of this give the number of clauses
 	private ArrayList<Integer[]> formula;
 
 	// number of variables in the formula
 	private int numVars;
-
-	// number of clauses in formula
-	private int clauseCount;
 
 	/**
 	 * This constructor will take in a line representing a CNF and parse it into
@@ -27,7 +25,6 @@ public class CNF {
 	public CNF(String line) {
 		// initialize the data
 		this.formula = new ArrayList<Integer[]>();
-		this.clauseCount = 0;
 		String numVarsString = "";
 		for (int i = 0; i < line.length(); i++) {
 			// getting entire number representing numVars
@@ -59,7 +56,6 @@ public class CNF {
 					formula.add(tempClause);
 					tempClause = new Integer[3];
 					tempClauseSize = 0;
-					clauseCount++;
 				}
 			} else {
 				// need to construct whole literal
@@ -84,15 +80,13 @@ public class CNF {
 		 */
 		List<String> matrix = new ArrayList<String>();
 		int this3 = 0;
-		
-		String emptyLine = "";
-		
+				
 		for(int i = 0; i < formula.size(); i++) {
 			Integer[] temp = formula.get(i);
 			this3 = i*3;
 
 			for(int j = 0; j < temp.length; j++) {
-				String line = emptyLine;
+				String line = "";
 				for(int k = 0; k < formula.size() * 3; k++) {
 					if(k == (i*3) + j) {
 						// same node
@@ -125,6 +119,14 @@ public class CNF {
 		Graph graph = new Graph(matrix, matrix.size(), '1');
 		
 		return graph;
+	}
+	
+	public int getNumVars() {
+		return numVars;
+	}
+	
+	public Integer getLiteral(int index) {
+		return new Integer(formula.get(index/3)[index%3]);
 	}
 
 	@Override
