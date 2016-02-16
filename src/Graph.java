@@ -36,6 +36,9 @@ public class Graph {
 
     }
 
+    public int getNodeCount(){
+        return this.nodeCount;
+    }
 
     public int getEdgeCount(){
         return this.edgeCount;

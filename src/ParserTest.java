@@ -13,8 +13,23 @@ public class ParserTest {
 //		Set<Integer> max = graphs.get(3).getMaxClique();
 //		printSet(max);
 
-		testCNF();
+		testClique();
+		//testCNF();
 
+	}
+
+	private static void testClique(){
+		List<Graph> graphs = Parser.parseGraph("graphs16.txt");
+		System.out.println("* Max Cliques in graphs in graphsDense.txt\n" +
+				"(|V|,|E|) Cliques (size, ms used)\n");
+		for(int i = 0; i < graphs.size(); i++){
+			long start = System.nanoTime();
+			Set<Integer> maxClique = graphs.get(i).getMaxCliqueSet();
+			long elapsed = System.nanoTime() - start;
+
+			printCliqueSet(i+1,graphs.get(i),maxClique,elapsed/1000000);
+
+		}
 	}
 
 	private static void testCNF() {
@@ -44,7 +59,8 @@ public class ParserTest {
 		//printSet(test.get(1).reduceToGraph().getMaxClique());
 	}
 
-	private static void printSet(Set<Integer> set) {
+	private static void printCliqueSet(int graphNum,Graph g,Set<Integer> set,long time) {
+		System.out.print("\nG"+graphNum+" ("+g.getNodeCount()+", "+g.getEdgeCount()+")");
 		System.out.print("{ ");
 		boolean first = true;
 		for(Integer i : set){
@@ -56,7 +72,7 @@ public class ParserTest {
 			System.out.print(i);
 		}
 
-		System.out.print(" }" + " SIZE -> "+set.size() + " Clique Graph");
+		System.out.print(" }" + " size="+set.size() + " " + time+"ms");
 
 	}
 	
