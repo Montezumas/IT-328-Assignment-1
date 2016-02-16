@@ -8,20 +8,38 @@ public class Graph {
 
     private boolean edgeList[][];
     private int nodeCount;
+    private int edgeCount;
 
-    public Graph(List<String> lines, int nodeCount, char flag){
+    public Graph(List<String> lines, int nodeCount){
 
         this.nodeCount = nodeCount;
+        this.edgeCount = 0;
+
         edgeList = new boolean[lines.size()][lines.get(0).length()];
 
         for(int row = 0; row < lines.size(); row++){
             for(int col = 0; col < lines.get(row).length(); col++){
-                edgeList[row][col] = lines.get(row).charAt(col) == flag;
+                edgeList[row][col] = lines.get(row).charAt(col) == '1';
             }
         }
+
+        //count edges
+        for(int i = 0; i < edgeList.length; i++){
+            for(int j = i+1; j < edgeList[i].length; j++){
+                if(edgeList[i][j]) {
+                    this.edgeCount++;
+                }
+            }
+        }
+
+        //System.out.println(edgeCount);
+
     }
 
 
+    public int getEdgeCount(){
+        return this.edgeCount;
+    }
     //Copy contructor
     public Graph(Graph g){
         this.edgeList = new boolean[g.edgeList.length][g.edgeList[0].length];
@@ -32,10 +50,11 @@ public class Graph {
             }
         }
 
+        this.edgeCount = g.edgeCount;
         this.nodeCount = g.nodeCount;
     }
 
-    public Set<Integer> getMaxClique(){
+    public Set<Integer> getMaxCliqueSet(){
 
         HashSet<Integer> q = new HashSet<>();
 
@@ -56,6 +75,10 @@ public class Graph {
                 if(cliques.get(i).size() > clique.size()){
                     clique = cliques.get(i);
                 }
+//                This just ensures there is more than 1 clique of size 12 to match Li's example
+//                if(cliques.get(i).size() == 12){
+//                    System.out.println("Got a clique of size 12!");
+//                }
             }
         }
 
@@ -63,10 +86,14 @@ public class Graph {
         return clique;
     }
 
+
+    public Graph getIndepedentSetGraph(){
+        return inverse();
+    }
     public Set<Integer> getIndependentSet(){
         Graph inversed = inverse();
 
-        return inversed.getMaxClique();
+        return inversed.getMaxCliqueSet();
 
     }
 

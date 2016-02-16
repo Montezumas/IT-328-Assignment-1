@@ -122,7 +122,7 @@ public class CNF {
 			System.out.println("Matrix size error");
 		}
 		
-		Graph graph = new Graph(matrix, matrix.size(), '1');
+		Graph graph = new Graph(matrix, matrix.size());
 		
 		return graph;
 	}

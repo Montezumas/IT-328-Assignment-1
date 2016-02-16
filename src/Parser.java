@@ -31,7 +31,7 @@ public class Parser {
                     lines.add(line);
 				}
 
-                allGraphs.add(new Graph(lines,rowCount,'1'));
+                allGraphs.add(new Graph(lines,rowCount));
 			}
 
 			reader.close();
@@ -72,7 +72,7 @@ public class Parser {
                     lines.add(line);
 				}
 
-                allGraphs.add(new Graph(lines,rowCount,'0'));
+                allGraphs.add(new Graph(lines,rowCount));
 			}
 
 			reader.close();
