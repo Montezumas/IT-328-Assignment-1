@@ -1,36 +1,53 @@
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class ParserTest {
 
 	public static void main(String[] args) {
-		List<Graph> graphs = Parser.parseGraph("graphs16.txt");
+//		List<Graph> graphs = Parser.parseGraph("graphs16.txt");
+//
+//		System.out.println("Graph Count: "+graphs.size());
+//
+//		Set<Integer> max = graphs.get(3).getMaxClique();
+//		printSet(max);
 
-		System.out.println("Graph Count: "+graphs.size());
-
-		//for(int i = 0; i < graphs.size(); i++){
-			//Set<Integer> max = graphs.get(59).getIndependentSet();
-			//printSet(max);
-		//}
-
-		Graph isg = graphs.get(2).getIndepedentSetGraph();
-		Set<Integer> max = isg.getMaxCliqueSet();
-		printSet(max);
-		System.out.println(isg.getEdgeCount());
-
-
-
-		//testCNF();
+		testCNF();
 
 	}
 
 	private static void testCNF() {
 		List<CNF> test = Parser.parseCNF("cnfs16.txt");
+<<<<<<< HEAD
+		
+		printCNFClique(test.get(1), test.get(1).reduceToGraph().getMaxClique());
+	}
+	
+	private static void printCNFClique(CNF cnf, Set<Integer> cnfClique) {
+		int variables = cnf.getNumVars();
+		Map<Integer, Boolean> allLiteralValues = new HashMap<Integer, Boolean>();
+		
+		for(Integer i : cnfClique) {
+			Integer literal = cnf.getLiteral(i);
+			System.out.println(literal);
 
-		printSet(test.get(1).reduceToGraph().getMaxCliqueSet());
+		}
+		
+		if(allLiteralValues.size() != variables) {
+			System.out.println("Error with number of variables");
+		}
+		
+		for(int i = -5; i < allLiteralValues.size(); i++) {
+			System.out.println(i + " = " + allLiteralValues.get(i));
+		}
+=======
+
+		printSet(test.get(1).reduceToGraph().getMaxClique());
+>>>>>>> 439965da5750cb33f69587fb2f78ed1cd9fa6417
 	}
 
-	private static void printSet(Set<Integer> set){
+	private static void printSet(Set<Integer> set) {
 		System.out.print("{ ");
 		boolean first = true;
 		for(Integer i : set){
@@ -42,7 +59,7 @@ public class ParserTest {
 			System.out.print(i);
 		}
 
-		System.out.print(" }" + " SIZE -> "+set.size() + " Clique Graph\n");
+		System.out.print(" }" + " SIZE -> "+set.size() + " Clique Graph");
 
 	}
 	
