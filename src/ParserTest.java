@@ -21,14 +21,26 @@ public class ParserTest {
 	private static void testClique(){
 		List<Graph> graphs = Parser.parseGraph("graphs16.txt");
 		System.out.println("* Max Cliques in graphs in graphsDense.txt\n" +
-				"(|V|,|E|) Cliques (size, ms used)\n");
+				"(|V|,|E|) Cliques (size, ms used)");
 		for(int i = 0; i < graphs.size(); i++){
 			long start = System.nanoTime();
 			Set<Integer> maxClique = graphs.get(i).getMaxCliqueSet();
 			long elapsed = System.nanoTime() - start;
 
 			printCliqueSet(i+1,graphs.get(i),maxClique,elapsed/1000000);
+		}
 
+		System.out.println("\n");
+		System.out.println("* Max Independent Sets in graphs in graphs16.txt : (reduced to K-Clique) *\n" +
+				"(|V|,|E|) Independent Set (size, ms used)");
+
+
+		for(int i = 0; i < graphs.size(); i++){
+			long start = System.nanoTime();
+			Set<Integer> maxClique = graphs.get(i).getIndependentSet();
+			long elapsed = System.nanoTime() - start;
+
+			printCliqueSet(i+1,graphs.get(i),maxClique,elapsed/1000000);
 		}
 	}
 
@@ -60,7 +72,7 @@ public class ParserTest {
 	}
 
 	private static void printCliqueSet(int graphNum,Graph g,Set<Integer> set,long time) {
-		System.out.print("\nG"+graphNum+" ("+g.getNodeCount()+", "+g.getEdgeCount()+")");
+		System.out.print("G"+graphNum+" ("+g.getNodeCount()+", "+g.getEdgeCount()+")");
 		System.out.print("{ ");
 		boolean first = true;
 		for(Integer i : set){
@@ -72,7 +84,7 @@ public class ParserTest {
 			System.out.print(i);
 		}
 
-		System.out.print(" }" + " size="+set.size() + " " + time+"ms");
+		System.out.print(" }" + " size="+set.size() + " " + time+"ms\n");
 
 	}
 	
