@@ -89,6 +89,39 @@ public class Graph {
         return clique;
     }
 
+    public Set<Integer> getMaxCliqueSet(int k){
+        HashSet<Integer> q = new HashSet<>();
+
+        for(int i = 0; i < nodeCount; i++){
+            q.add(i);
+        }
+
+        List<HashSet<Integer>> cliques = new ArrayList<>();
+        getKClique(k,cliques,new HashSet<Integer>(),q,new HashSet<Integer>());
+
+
+        Set<Integer> clique = new HashSet<>();
+
+        for(int i = 0; i < cliques.size(); i++){
+            if(i==0){
+                clique = cliques.get(i);
+            } else {
+                if(cliques.get(i).size() > clique.size()){
+                    clique = cliques.get(i);
+                }
+//                This just ensures there is more than 1 clique of size 12 to match Li's example
+//                if(cliques.get(i).size() == 12){
+//                    System.out.println("Got a clique of size 12!");
+//                }
+            }
+        }
+
+
+        return clique;
+
+    }
+
+
 
     public Graph getIndepedentSetGraph(){
         return inverse();
@@ -139,9 +172,6 @@ public class Graph {
 
     private void getKClique(int k,List<HashSet<Integer>> cliqueCatcher,HashSet<Integer> r, HashSet<Integer> p, HashSet<Integer> x){
 
-        if(r.size() != k){
-            return;
-        }
 
         if(p.size() == 0 && x.size() == 0){
             cliqueCatcher.add(new HashSet<Integer>(r));
