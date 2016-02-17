@@ -100,7 +100,7 @@ public class Graph {
 
         stopClique = false;
         List<HashSet<Integer>> cliques = new ArrayList<>();
-        getKClique(k,cliques,new HashSet<Integer>(),q,new HashSet<Integer>());
+//        getKClique(k,cliques,new HashSet<Integer>(),q,new HashSet<Integer>());
 
 
 

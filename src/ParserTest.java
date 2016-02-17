@@ -53,7 +53,7 @@ public class ParserTest {
 			Graph graph = cnf.reduceToGraph();
 
 			long start = System.nanoTime();
-			Set<Integer> clique = graph.getKCliqueSet(cnf.getFormulaSize());
+			Set<Integer> clique = graph.getMaxCliqueSet();
 			long elapsed = System.nanoTime() - start;
 			elapsed /= 1000000;
 
