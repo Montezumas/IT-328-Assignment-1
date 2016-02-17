@@ -57,7 +57,7 @@ public class ParserTest {
 			long elapsed = System.nanoTime() - start;
 			elapsed /= 1000000;
 			
-			//System.out.println(clique.toString());
+			//System.out.println(clique.toString() + " " + clique.size());
 
 			int k = clique.size();
 			if(k < cnf.getFormulaSize()) {
@@ -71,7 +71,7 @@ public class ParserTest {
 
 	}
 
-	private static void printCNFClique(CNF cnf, Set<Integer> cnfClique) {
+	public static void printCNFClique(CNF cnf, Set<Integer> cnfClique) {
 		if(cnfClique.size() < cnf.getFormulaSize()) {
 			System.out.print("No " + cnf.getFormulaSize() + "-clique; no solution");
 			return;
@@ -92,14 +92,21 @@ public class ParserTest {
 			}
 		}
 
-		for(int i = 1; i < values.size()+1; i++) {
-			line += "A"+ i + "=" + values.get(i) + " ";
+		int size = values.size()+1;
+		
+		for(int i = 1; i < size; i++) {
+			if(!values.containsKey(i)) {
+				size++;
+			} else {
+				line += "A"+ i + "=" + values.get(i) + " ";
+			}
 		}
 
 		line += "]";
 
 
 		System.out.print(line);
+		
 	}
 
 
@@ -115,6 +122,7 @@ public class ParserTest {
 			}
 			System.out.print(i);
 		}
+		
 
 		System.out.print(" }" + " size="+set.size() + " " + time+"ms\n");
 

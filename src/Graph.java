@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public class Graph {
@@ -182,42 +183,42 @@ public class Graph {
     public Set<Integer> getKClique(int k){
     	Set<Integer> result = null;
     	
-        for(int i = 0; i < nodeCount; i++){
-            HashSet<Integer> temp = new HashSet<Integer>();
-            temp.add(i);
-            result = getKClique(k, temp);
+        for(int i = 0; i < nodeCount; i++) {
+            result = getKClique(k, i);
             if(result.size() == k) {
             	return result;
             }
         }
         
+        // no k clique
 		return result;
     }
 
-    private Set<Integer> getKClique(int k, Set<Integer> set){
-    	Set<Integer> loop = set;
+    private Set<Integer> getKClique(int k, int z) {
+    	Set<Integer> set = new HashSet<Integer>();
+    	set.add(z);
     	
     	for(Integer i : set) {
-    		Set<Integer> temp = getNeighborSet(i);
-    		for(Integer j : temp) {
-    			boolean flag = true;
-    			for(Integer x : loop) {
-    				if(edgeList[j][x]) {
-    					// connected
-    				} else {
-    					flag = false;
-    					break;
-    				}
-    			}
-    			if(flag) {
-    				loop.add(j);
-    			}
-    		}
+			Set<Integer> temp = getNeighborSet(i);
+			for(Integer j : temp) {
+				boolean flag = true;
+				for(Integer x : set) {
+					if(edgeList[j][x]) {
+						// connected
+					} else {
+						flag = false;
+						break;
+					}
+				}
+				if(flag) {
+					set.add(j);
+				}
+			}
     	}
 
-    	return loop;
+    	return set;
     }
-
+    
     private static HashSet<Integer> intersect(HashSet<Integer> a, HashSet<Integer> b){
         HashSet<Integer> temp = new HashSet<>(b);
         temp.retainAll(a);
