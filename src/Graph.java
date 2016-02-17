@@ -119,7 +119,7 @@ public class Graph {
 //        }
 
 
-        return cliques.get(0) == null ? new HashSet<>() : cliques.get(0);
+        return (cliques.get(0) == null ? new HashSet<>() : cliques.get(0));
 
     }
 
