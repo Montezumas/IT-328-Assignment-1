@@ -53,7 +53,7 @@ public class ParserTest {
 			Graph graph = cnf.reduceToGraph();
 
 			long start = System.nanoTime();
-			Set<Integer> clique = graph.getMaxCliqueSet();
+			Set<Integer> clique = graph.getKCliqueSet(cnf.getFormulaSize());
 			long elapsed = System.nanoTime() - start;
 			elapsed /= 1000000;
 
@@ -75,7 +75,6 @@ public class ParserTest {
 			return;
 		}
 
-		int variables = cnf.getNumVars();
 		String line = "[";
 		HashMap<Integer, Character> values = new HashMap<Integer, Character>();
 

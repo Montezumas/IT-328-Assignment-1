@@ -9,6 +9,7 @@ public class Graph {
     private boolean edgeList[][];
     private int nodeCount;
     private int edgeCount;
+    private boolean stopClique = false;
 
     public Graph(List<String> lines, int nodeCount){
 
@@ -89,35 +90,36 @@ public class Graph {
         return clique;
     }
 
-    public Set<Integer> getMaxCliqueSet(int k){
+    public Set<Integer> getKCliqueSet(int k){
         HashSet<Integer> q = new HashSet<>();
 
         for(int i = 0; i < nodeCount; i++){
             q.add(i);
         }
 
+
+        stopClique = false;
         List<HashSet<Integer>> cliques = new ArrayList<>();
         getKClique(k,cliques,new HashSet<Integer>(),q,new HashSet<Integer>());
 
 
-        Set<Integer> clique = new HashSet<>();
 
-        for(int i = 0; i < cliques.size(); i++){
-            if(i==0){
-                clique = cliques.get(i);
-            } else {
-                if(cliques.get(i).size() > clique.size()){
-                    clique = cliques.get(i);
-                }
-//                This just ensures there is more than 1 clique of size 12 to match Li's example
-//                if(cliques.get(i).size() == 12){
-//                    System.out.println("Got a clique of size 12!");
+//        for(int i = 0; i < cliques.size(); i++){
+//            if(i==0){
+//                clique = cliques.get(i);
+//            } else {
+//                if(cliques.get(i).size() > clique.size()){
+//                    clique = cliques.get(i);
 //                }
-            }
-        }
+////                This just ensures there is more than 1 clique of size 12 to match Li's example
+////                if(cliques.get(i).size() == 12){
+////                    System.out.println("Got a clique of size 12!");
+////                }
+//            }
+//        }
 
 
-        return clique;
+        return cliques.get(0) == null ? new HashSet<>() : cliques.get(0);
 
     }
 
@@ -173,24 +175,45 @@ public class Graph {
     private void getKClique(int k,List<HashSet<Integer>> cliqueCatcher,HashSet<Integer> r, HashSet<Integer> p, HashSet<Integer> x){
 
 
-        if(p.size() == 0 && x.size() == 0){
-            cliqueCatcher.add(new HashSet<Integer>(r));
+
+
+            if (p.size() == 0 && x.size() == 0) {
+                cliqueCatcher.add(new HashSet<Integer>(r));
+                stopClique = true;
+                return;
+            }
+
+
+        if(r.size() > k){
+            stopClique = true;
             return;
         }
 
-        HashSet<Integer> newP = new HashSet<>(p);
 
 
-        for(Integer i : p){
+            HashSet<Integer> newP = new HashSet<>(p);
 
-            r.add(i);
-            HashSet<Integer> neighborSet = getNeighborSet(i);
-            getMaxClique(cliqueCatcher,r,intersect(newP,neighborSet),intersect(x,neighborSet));
+            for (Integer i : p) {
 
-            r.remove(i);
-            newP.remove(i);
-            x.add(i);
-        }
+                r.add(i);
+                HashSet<Integer> neighborSet = getNeighborSet(i);
+
+
+                getKClique(k, cliqueCatcher, r, intersect(newP, neighborSet), intersect(x, neighborSet));
+
+
+                if(stopClique){
+                    return;
+                }
+
+
+                r.remove(i);
+                newP.remove(i);
+                x.add(i);
+
+
+            }
+
     }
 
     private static HashSet<Integer> intersect(HashSet<Integer> a, HashSet<Integer> b){
