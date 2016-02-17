@@ -5,7 +5,22 @@ import java.util.Set;
 public class solve3CNF {
 
 	public static void main(String args[]) {
-		List<CNF> temp = Parser.parseCNF(args[0]);
+
+		if(args == null || args.length == 0 || args[0] == null || args[0].isEmpty()){
+			System.out.println("Error, please provide a valid file name!");
+			return;
+		}
+
+		String filename = args[0];
+
+		List<CNF> temp = Parser.parseCNF(filename);
+
+
+		if(temp == null){
+			System.out.println("There was an error parsing the file. Ensure you have correct file name");
+			return;
+		}
+
 		
 		for(int i = 0; i < temp.size(); i++) {
 			CNF cnf = temp.get(i);
