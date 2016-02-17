@@ -118,14 +118,6 @@ public class Graph {
     private void getMaxClique(List<HashSet<Integer>> cliqueCatcher,HashSet<Integer> r, HashSet<Integer> p, HashSet<Integer> x){
 
         if(p.size() == 0 && x.size() == 0){
-            /*if(r.size() > 14) {
-                System.out.println(r.size());
-            }*/
-//            System.out.print("{ ");
-//            for(Integer i : r){
-//                System.out.print(i + ",");
-//            }
-//            System.out.print(" }\n");
             cliqueCatcher.add(new HashSet<Integer>(r));
             return;
         }
@@ -135,19 +127,40 @@ public class Graph {
 
         for(Integer i : p){
 
-
             r.add(i);
-
             HashSet<Integer> neighborSet = getNeighborSet(i);
-
             getMaxClique(cliqueCatcher,r,intersect(newP,neighborSet),intersect(x,neighborSet));
-
 
             r.remove(i);
             newP.remove(i);
             x.add(i);
         }
+    }
 
+    private void getKClique(int k,List<HashSet<Integer>> cliqueCatcher,HashSet<Integer> r, HashSet<Integer> p, HashSet<Integer> x){
+
+        if(r.size() != k){
+            return;
+        }
+
+        if(p.size() == 0 && x.size() == 0){
+            cliqueCatcher.add(new HashSet<Integer>(r));
+            return;
+        }
+
+        HashSet<Integer> newP = new HashSet<>(p);
+
+
+        for(Integer i : p){
+
+            r.add(i);
+            HashSet<Integer> neighborSet = getNeighborSet(i);
+            getMaxClique(cliqueCatcher,r,intersect(newP,neighborSet),intersect(x,neighborSet));
+
+            r.remove(i);
+            newP.remove(i);
+            x.add(i);
+        }
     }
 
     private static HashSet<Integer> intersect(HashSet<Integer> a, HashSet<Integer> b){
