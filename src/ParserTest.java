@@ -47,15 +47,17 @@ public class ParserTest {
 	private static void testCNF() {
 		List<CNF> test = Parser.parseCNF("cnfs16.txt");
 
-		for(int i = 0; i < test.size(); i++) {
+		for(int i = 1; i < 2; i++) {
 			CNF cnf = test.get(i);
 
 			Graph graph = cnf.reduceToGraph();
 
 			long start = System.nanoTime();
-			Set<Integer> clique = graph.getKCliqueSet(cnf.getFormulaSize());
+			Set<Integer> clique = graph.findKClique(cnf.getFormulaSize());
 			long elapsed = System.nanoTime() - start;
 			elapsed /= 1000000;
+			
+			System.out.println(clique.toString());
 
 			int k = clique.size();
 			if(k < cnf.getFormulaSize()) {

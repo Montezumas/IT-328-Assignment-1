@@ -118,11 +118,50 @@ public class Graph {
 //            }
 //        }
 
+        Set<Integer> hi = new HashSet<>(0);
 
-        return (cliques.get(0) == null ? new HashSet<>() : cliques.get(0));
+        if(cliques.size() == 0 || cliques.get(0).size() == 0){
+            return hi;
+        } else {
+            return cliques.get(0);
+        }
 
+        //return cliques.get(0) == null ? new HashSet<>() : cliques.get(0);
     }
 
+    
+    public Set<Integer> findKClique(int max) {
+    	Set<Integer> clique = new HashSet<Integer>();
+    	
+    	
+    	for(int i = 0; i < edgeList.length; i ++) {
+    		clique.add(i);
+    		
+    		MainLoop:
+    		for(int j = 0; j < edgeList[i].length; j++) {
+    			if(edgeList[i][j]) {
+    				clique.add(j);
+    				if(clique.size() == max) {
+    					break MainLoop;
+    				}
+    			}
+    		}
+    		
+    		MainLoop:
+    		for(Integer k : clique) {
+    			for(Integer l : clique) {
+    				if(edgeList[k][l]) {
+    					System.out.println("OK");
+    				} else {
+    					break MainLoop;
+    				}
+    			}
+    		}
+    		
+    	}
+    	
+    	return clique;
+    }
 
 
     public Graph getIndepedentSetGraph(){
