@@ -118,8 +118,15 @@ public class Graph {
 //            }
 //        }
 
+        Set<Integer> hi = new HashSet<>(0);
 
-        return cliques.get(0) == null ? new HashSet<>() : cliques.get(0);
+        if(cliques.size() == 0 || cliques.get(0).size() == 0){
+            return hi;
+        } else {
+            return cliques.get(0);
+        }
+
+        //return cliques.get(0) == null ? new HashSet<>() : cliques.get(0);
 
     }
 
