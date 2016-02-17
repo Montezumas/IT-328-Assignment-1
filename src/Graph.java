@@ -100,7 +100,7 @@ public class Graph {
 
         stopClique = false;
         List<HashSet<Integer>> cliques = new ArrayList<>();
-        getKClique(k,cliques,new HashSet<Integer>(),q,new HashSet<Integer>());
+        //getKClique(k,cliques,new HashSet<Integer>(),q,new HashSet<Integer>());
 
 
 
@@ -129,39 +129,7 @@ public class Graph {
         //return cliques.get(0) == null ? new HashSet<>() : cliques.get(0);
     }
 
-    
-    public Set<Integer> findKClique(int max) {
-    	Set<Integer> clique = new HashSet<Integer>();
-    	
-    	
-    	for(int i = 0; i < edgeList.length; i ++) {
-    		clique.add(i);
-    		
-    		MainLoop:
-    		for(int j = 0; j < edgeList[i].length; j++) {
-    			if(edgeList[i][j]) {
-    				clique.add(j);
-    				if(clique.size() == max) {
-    					break MainLoop;
-    				}
-    			}
-    		}
-    		
-    		MainLoop:
-    		for(Integer k : clique) {
-    			for(Integer l : clique) {
-    				if(edgeList[k][l]) {
-    					System.out.println("OK");
-    				} else {
-    					break MainLoop;
-    				}
-    			}
-    		}
-    		
-    	}
-    	
-    	return clique;
-    }
+   
 
 
     public Graph getIndepedentSetGraph(){
@@ -211,20 +179,43 @@ public class Graph {
         }
     }
 
-    private void getKClique(int k){
-
+    public Set<Integer> getKClique(int k){
+    	Set<Integer> result = null;
+    	
         for(int i = 0; i < nodeCount; i++){
             HashSet<Integer> temp = new HashSet<Integer>();
             temp.add(i);
-            getKClique(k, temp);
+            result = getKClique(k, temp);
+            if(result.size() == k) {
+            	return result;
+            }
         }
-
+        
+		return result;
     }
 
-    private void getKClique(int k, Set<Integer> set){
+    private Set<Integer> getKClique(int k, Set<Integer> set){
+    	Set<Integer> loop = set;
+    	
+    	for(Integer i : set) {
+    		Set<Integer> temp = getNeighborSet(i);
+    		for(Integer j : temp) {
+    			boolean flag = true;
+    			for(Integer x : loop) {
+    				if(edgeList[j][x]) {
+    					// connected
+    				} else {
+    					flag = false;
+    					break;
+    				}
+    			}
+    			if(flag) {
+    				loop.add(j);
+    			}
+    		}
+    	}
 
-
-
+    	return loop;
     }
 
     private static HashSet<Integer> intersect(HashSet<Integer> a, HashSet<Integer> b){
