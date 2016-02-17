@@ -9,7 +9,7 @@ import java.util.List;
 public class Parser {
 
 	public static List<Graph> parseGraph(String filename) {
-        List<Graph> allGraphs = new ArrayList<>();
+        List<Graph> allGraphs = new ArrayList<Graph>();
 
 		BufferedReader bufferedReader;
 		try {
@@ -25,7 +25,7 @@ public class Parser {
 				if(rowCount == 0)
 					break;
 
-                List<String> lines = new ArrayList<>();
+                List<String> lines = new ArrayList<String>();
 				for(int i = 0; i < rowCount; i++) {
 					String line = bufferedReader.readLine().replaceAll("\\s+","");
                     lines.add(line);
@@ -50,7 +50,7 @@ public class Parser {
 	}
 
 	public static List<CNF> parseCNF(String filename) {
-        List<CNF> allFormulas = new ArrayList<>();
+        List<CNF> allFormulas = new ArrayList<CNF>();
 
 		BufferedReader bufferedReader;
 		try {

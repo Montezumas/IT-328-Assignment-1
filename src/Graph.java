@@ -61,17 +61,17 @@ public class Graph {
 
     public Set<Integer> getMaxCliqueSet(){
 
-        HashSet<Integer> q = new HashSet<>();
+        HashSet<Integer> q = new HashSet<Integer>();
 
         for(int i = 0; i < nodeCount; i++){
             q.add(i);
         }
 
-        List<HashSet<Integer>> cliques = new ArrayList<>();
+        List<HashSet<Integer>> cliques = new ArrayList<HashSet<Integer>>();
         getMaxClique(cliques,new HashSet<Integer>(),q,new HashSet<Integer>());
 
 
-        Set<Integer> clique = new HashSet<>();
+        Set<Integer> clique = new HashSet<Integer>();
 
         for(int i = 0; i < cliques.size(); i++){
             if(i==0){
@@ -92,7 +92,7 @@ public class Graph {
     }
 
     public Set<Integer> getKCliqueSet(int k){
-        HashSet<Integer> q = new HashSet<>();
+        HashSet<Integer> q = new HashSet<Integer>();
 
         for(int i = 0; i < nodeCount; i++){
             q.add(i);
@@ -100,7 +100,7 @@ public class Graph {
 
 
         stopClique = false;
-        List<HashSet<Integer>> cliques = new ArrayList<>();
+        List<HashSet<Integer>> cliques = new ArrayList<HashSet<Integer>>();
         //getKClique(k,cliques,new HashSet<Integer>(),q,new HashSet<Integer>());
 
 
@@ -119,7 +119,7 @@ public class Graph {
 //            }
 //        }
 
-        Set<Integer> hi = new HashSet<>(0);
+        Set<Integer> hi = new HashSet<Integer>(0);
 
         if(cliques.size() == 0 || cliques.get(0).size() == 0){
             return hi;
@@ -127,7 +127,6 @@ public class Graph {
             return cliques.get(0);
         }
 
-        //return cliques.get(0) == null ? new HashSet<>() : cliques.get(0);
     }
 
    
@@ -165,7 +164,7 @@ public class Graph {
             return;
         }
 
-        HashSet<Integer> newP = new HashSet<>(p);
+        HashSet<Integer> newP = new HashSet<Integer>(p);
 
 
         for(Integer i : p){
@@ -220,14 +219,14 @@ public class Graph {
     }
     
     private static HashSet<Integer> intersect(HashSet<Integer> a, HashSet<Integer> b){
-        HashSet<Integer> temp = new HashSet<>(b);
+        HashSet<Integer> temp = new HashSet<Integer>(b);
         temp.retainAll(a);
         return temp;
     }
 
     private HashSet<Integer> getNeighborSet(int index){
 
-        HashSet<Integer> returnMe = new HashSet<>();
+        HashSet<Integer> returnMe = new HashSet<Integer>();
 
 
         boolean[] table = edgeList[index];
