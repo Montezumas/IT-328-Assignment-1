@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,29 +20,59 @@ public class ParserTest {
 
 	private static void testCNF() {
 		List<CNF> test = Parser.parseCNF("cnfs16.txt");
+				
+		for(int i = 0; i < test.size(); i++) {
+			CNF cnf = test.get(i);
+			
+			Graph graph = cnf.reduceToGraph();
+			
+			long start = System.nanoTime();
+			Set<Integer> clique = graph.getMaxCliqueSet();
+			long elapsed = System.nanoTime() - start;
+			elapsed /= 1000000;
+			
+			int k = clique.size();
+			if(k < cnf.getFormulaSize()) {
+				k = cnf.getFormulaSize();
+			}
+			
+			System.out.print("3CNF No." + (i+1) + " [n=" + cnf.getNumVars() + " k=" + k + "] ");
+			printCNFClique(cnf, clique);
+			System.out.println(" (" + elapsed + " ms)");
+		}
 		
-		printCNFClique(test.get(1), test.get(1).reduceToGraph().getMaxCliqueSet());
 	}
 	
 	private static void printCNFClique(CNF cnf, Set<Integer> cnfClique) {
+		if(cnfClique.size() < cnf.getFormulaSize()) {
+			System.out.print("No " + cnf.getFormulaSize() + "-clique; no solution");
+			return;
+		}
+		
 		int variables = cnf.getNumVars();
-		Map<Integer, Boolean> allLiteralValues = new HashMap<Integer, Boolean>();
+		String line = "[";
+		HashMap<Integer, Character> values = new HashMap<Integer, Character>();
 		
 		for(Integer i : cnfClique) {
 			Integer literal = cnf.getLiteral(i);
-			System.out.println(literal);
-
+			
+			if(!values.containsKey(literal)) {
+				if(literal < 0){
+					values.put(literal*(-1), 'F');
+				} else {
+					values.put(literal, 'T');
+				}
+			}
 		}
 		
-		if(allLiteralValues.size() != variables) {
-			System.out.println("Error with number of variables");
+		for(int i = 1; i < values.size()+1; i++) {
+			line += "A"+ i + "=" + values.get(i) + " ";
 		}
 		
-		for(int i = -5; i < allLiteralValues.size(); i++) {
-			System.out.println(i + " = " + allLiteralValues.get(i));
-		}
+		line += "]";
+		
 
-		//printSet(test.get(1).reduceToGraph().getMaxClique());
+		System.out.print(line);
 	}
 
 	private static void printSet(Set<Integer> set) {

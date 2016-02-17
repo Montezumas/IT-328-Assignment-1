@@ -128,6 +128,10 @@ public class CNF {
 	public Integer getLiteral(int index) {
 		return new Integer(formula.get(index/3)[index%3]);
 	}
+	
+	public int getFormulaSize() {
+		return formula.size();
+	}
 
 	@Override
 	public String toString() {
