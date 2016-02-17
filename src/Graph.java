@@ -179,47 +179,19 @@ public class Graph {
         }
     }
 
-    private void getKClique(int k,List<HashSet<Integer>> cliqueCatcher,HashSet<Integer> r, HashSet<Integer> p, HashSet<Integer> x){
+    private void getKClique(int k){
 
-
-
-
-            if (p.size() == 0 && x.size() == 0) {
-                cliqueCatcher.add(new HashSet<Integer>(r));
-                stopClique = true;
-                return;
-            }
-
-
-        if(r.size() > k){
-            stopClique = true;
-            return;
+        for(int i = 0; i < nodeCount; i++){
+            HashSet<Integer> temp = new HashSet<Integer>();
+            temp.add(i);
+            getKClique(k, temp);
         }
 
+    }
+
+    private void getKClique(int k, Set<Integer> set){
 
 
-            HashSet<Integer> newP = new HashSet<>(p);
-
-            for (Integer i : p) {
-
-                r.add(i);
-                HashSet<Integer> neighborSet = getNeighborSet(i);
-
-
-                getKClique(k, cliqueCatcher, r, intersect(newP, neighborSet), intersect(x, neighborSet));
-
-
-                if(stopClique){
-                    return;
-                }
-
-
-                r.remove(i);
-                newP.remove(i);
-                x.add(i);
-
-
-            }
 
     }
 
