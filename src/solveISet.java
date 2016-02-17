@@ -16,6 +16,11 @@ public class solveISet {
 
         List<Graph> graphs = Parser.parseGraph(filename);
 
+        if(graphs == null){
+            System.out.println("There was an error parsing the file. Ensure you have correct file name");
+            return;
+        }
+
         System.out.println("* Max Independent Sets in graphs in graphs16.txt : (reduced to K-Clique) *\n" +
                 "(|V|,|E|) Independent Set (size, ms used)");
 

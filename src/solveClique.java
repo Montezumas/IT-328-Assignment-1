@@ -16,6 +16,11 @@ public class solveClique {
 
         List<Graph> graphs = Parser.parseGraph(filename);
 
+        if(graphs == null){
+            System.out.println("There was an error parsing the file. Ensure you have correct file name");
+            return;
+        }
+
         System.out.println("* Max Cliques in graphs in graphsDense.txt\n" +
                 "(|V|,|E|) Cliques (size, ms used)");
         for(int i = 0; i < graphs.size(); i++){
